@@ -19,8 +19,8 @@ activity = st.text_area("主な活動や経歴")
 free_comment = st.text_area("自由記入欄（やってみたいこと、意気込みなど）")
 
 # フォント（Windows向けにも対応可能なもの）
-font_title_path = "C:/Windows/Fonts/YuGothB.ttc"
-font_body_path = "C:/Windows/Fonts/YuGothM.ttc"
+font_title_path = "fonts/NotoSansJP-Bold.ttf"
+font_body_path = "fonts/NotoSansJP-Regular.ttf"
 
 if st.button("履歴書画像を生成"):
     if not all([photo, name, x_account, vc_status, activity, free_comment]):
