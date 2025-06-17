@@ -8,17 +8,14 @@ st.title("📝 キプかわ モデレーター応募用・履歴書ジェネレ�
 st.write("以下に入力して、あなただけの“履歴書画像”を生成してください。")
 st.write("生成された画像を保存し、指定のXアカウントにDMで送ってください 📩")
 
-# 顔写真アップロード
 photo = st.file_uploader("顔写真をアップロード（正方形または4:3にトリミングされます）", type=["png", "jpg", "jpeg"])
 
-# 入力フォーム
 name = st.text_input("お名前")
 x_account = st.text_input("Xアカウント（@から）")
 vc_status = st.radio("VCの可否", options=["可", "不可", "状況による"])
 activity = st.text_area("主な活動や経歴")
 free_comment = st.text_area("自由記入欄（やってみたいこと、意気込みなど）")
 
-# フォント（Windows向けにも対応可能なもの）
 font_title_path = "fonts/NotoSansJP-Bold.ttf"
 font_body_path = "fonts/NotoSansJP-Regular.ttf"
 
@@ -29,7 +26,6 @@ if st.button("履歴書画像を生成"):
         image = Image.new("RGB", (1240, 1754), (255, 255, 255))
         draw = ImageDraw.Draw(image)
 
-        # 写真処理
         uploaded_img = Image.open(photo).convert("RGB")
         w, h = uploaded_img.size
         min_edge = min(w, h)
@@ -37,12 +33,11 @@ if st.button("履歴書画像を生成"):
         resized = cropped.resize((300, 300))
         image.paste(resized, (50, 50))
 
-        # フォント読み込み
         font_title = ImageFont.truetype(font_title_path, 28)
         font_body = ImageFont.truetype(font_body_path, 24)
         line_spacing = 36
 
-        # テキストブロック
+        # ヘッダ
         x0, y0 = 380, 64
         draw.rectangle([x0 - 10, y0 - 10, 1150, y0 + 130], outline="black", width=2)
         draw.text((x0, y0), f"お名前：{name}", font=font_body, fill=(0, 0, 0))
@@ -67,11 +62,10 @@ if st.button("履歴書画像を生成"):
         for i, line in enumerate(textwrap.wrap(free_comment, width=45)):
             draw.text((50, y2 + 60 + i*line_spacing), line, font=font_body, fill=(0, 0, 0))
 
-        # 表示・保存
         buf = io.BytesIO()
         image.save(buf, format="PNG")
         byte_im = buf.getvalue()
 
         st.image(image, caption="あなたの履歴書", use_container_width=True)
         st.download_button("⬇️ 履歴書画像をダウンロード", data=byte_im, file_name="vrc_resume.png", mime="image/png")
-        st.success("この画像を @xxx にDMで送ってください📩")
+        st.success("この画像を @haise_rei にDMで送ってください📩")
